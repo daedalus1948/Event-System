@@ -7,6 +7,7 @@ interface EventListener {
     void eventPerformed(EventObject e);
 }
 
+
 abstract class EventEmitterBlueprint {
     // instance, every instance has different object listeners registered
 
@@ -85,12 +86,12 @@ class EV implements EventListener {
     }
 }
 
+
 class BM implements EventListener {
     public void eventPerformed (EventObject event) {
         System.out.println("BM - it worked " + event.getName());
     }
 }
-
 // Based on which event gets generated and what event type a listener is registered to, eventPerformed might be called()
 // Event object creation simplified (not reading from standard input)
 public class EventSystem {
