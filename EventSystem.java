@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
@@ -60,8 +62,14 @@ class EventObject {
     private static String[] type = {"click", "hover", "socket", "close", "open"};
     private String name;
 
+    // if there is no data from standard input, generate a random event type
     private void setName() {
         this.name = type[genRandom()];
+    }
+
+    // for event supplied by standard input
+    private void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {
@@ -77,18 +85,25 @@ class EventObject {
     EventObject () { // on init, generate and set a random name
         setName();
     }
+
+    // overloaded constructor in case event is read from standard input
+    EventObject (String name) { // on init, generate and set a random name
+        setName(name);
+    }
 }
 
 // read from standard input, parse data and form blueprints for the event object
 class DataParser {
 
-    public void readData() {
+    public String readData() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             String inputData = reader.readLine();
             System.out.println("Line of input has been processed -- " + inputData);
+            return inputData;
         } catch (Exception error) {
             System.out.println("There was an error" + error.getMessage());
+            return "none";
         }
     }
 }
@@ -110,6 +125,11 @@ class BM implements EventListener {
 // Event object creation simplified (not reading from standard input)
 public class EventSystem {
     public static void main (String[] args) {
+
+        DataParser buffer = new DataParser();
+        // supply user input in the form of event type string - e.g. "click" or "hover"
+        String eventMessage = buffer.readData();
+
         Button btn1 = new Button(new String [] {"click", "hover", "socket"}, 10, 11); // event emitter
         Button btn2 = new Button(new String [] {"click", "hover", "socket", "close"}, 12, 15); // event emitter
 
@@ -119,7 +139,7 @@ public class EventSystem {
         btn1.registerEventListener("click", listener1); // attach the listener to the emitter source
         btn2.registerEventListener("hover", listener2);
 
-        btn1.emitEvent(new EventObject());
+        btn1.emitEvent(new EventObject(eventMessage));
         btn2.emitEvent(new EventObject());
     }
 }
