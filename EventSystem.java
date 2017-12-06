@@ -121,8 +121,8 @@ class BM implements EventListener {
         System.out.println("BM - it worked " + event.getName());
     }
 }
+
 // Based on which event gets generated and what event type a listener is registered to, eventPerformed might be called()
-// Event object creation simplified (not reading from standard input)
 public class EventSystem {
     public static void main (String[] args) {
 
