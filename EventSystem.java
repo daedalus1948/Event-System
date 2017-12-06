@@ -79,6 +79,20 @@ class EventObject {
     }
 }
 
+// read from standard input, parse data and form blueprints for the event object
+class DataParser {
+
+    public void readData() {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            String inputData = reader.readLine();
+            System.out.println("Line of input has been processed -- " + inputData);
+        } catch (Exception error) {
+            System.out.println("There was an error" + error.getMessage());
+        }
+    }
+}
+
 
 class EV implements EventListener {
     public void eventPerformed (EventObject event) {
